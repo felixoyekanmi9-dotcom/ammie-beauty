@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ammie Beauty Empire</title>
+
+    <style>
+        /* GENERAL STYLES */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            height: 100vh;
+            background: url('https://images.unsplash.com/photo-1604654894610-df63bc536371') no-repeat center/cover;
+            position: relative;
+        }
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.6);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        /* BUTTON STYLE */
+        .btn {
+            background: linear-gradient(45deg, purple, pink);
+            padding: 12px 25px;
+            text-decoration: none;
+            color: white;
+            margin-top: 15px;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* SECTION STYLE */
+        .section {
+            padding: 40px 20px;
+            text-align: center;
+            background: #111;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .section h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        /* GALLERY */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            background: #000;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+            cursor: pointer;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        /* FOOTER */
+        footer {
+            background: black;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* FADE IN ANIMATION */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero {
+                height: 70vh;
+            }
+            h1 {
+                font-size: 26px;
+            }
+            p {
+                font-size: 14px;
+            }
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            .section {
+                padding: 25px 15px;
+            }
+            .gallery img {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="overlay">
+        <h1>Ammie Beauty Empire 💅</h1>
+        <p>Your beauty, our priority</p>
+        <a class="btn" href="https://wa.me/2347040981913">
+            Book on WhatsApp
+        </a>
+    </div>
+</div>
+
+<!-- SERVICES -->
+<div class="section">
+    <h2>Our Services</h2>
+    <p id="services" style="font-weight: bold; cursor: pointer;">
+        Acrylic Nails | Gel Nails | Acrylic Toes | Lashes | Pedicure | Manicure | Press-On Nails
+    </p>
+    <small style="color: #ccc;">Click the text to edit services</small>
+</div>
+
+<!-- GALLERY -->
+<div class="section">
+    <h2>Our Work 💅</h2>
+</div>
+
+<div class="gallery">
+    <img src="images/nails1.jpeg" alt="Nails 1">
+    <img src="images/nails3.jpeg" alt="Nails 3">
+    <img src="images/lashes.jpeg" alt="Lashes">
+</div>
+
+<!-- LOCATION -->
+<div class="section">
+    <h2>Location</h2>
+    <p>Divine Junction, Ifite, Awka</p>
+</div>
+
+<footer>
+    <p>© 2026 Ammie Beauty Empire</p>
+</footer>
+
+<!-- SCRIPTS -->
+<script>
+    // Lightbox for gallery images
+    document.querySelectorAll(".gallery img").forEach(img => {
+        img.onclick = function() {
+            let popup = document.createElement("div");
+            popup.style.position = "fixed";
+            popup.style.top = 0;
+            popup.style.left = 0;
+            popup.style.width = "100%";
+            popup.style.height = "100%";
+            popup.style.background = "rgba(0,0,0,0.8)";
+            popup.style.display = "flex";
+            popup.style.justifyContent = "center";
+            popup.style.alignItems = "center";
+            popup.style.cursor = "pointer";
+            popup.onclick = () => popup.remove();
+
+            let bigImg = document.createElement("img");
+            bigImg.src = this.src;
+            bigImg.style.maxWidth = "90%";
+            bigImg.style.maxHeight = "90%";
+
+            popup.appendChild(bigImg);
+            document.body.appendChild(popup);
+        }
+    });
+
+    // Editable services with localStorage saving
+    const services = document.getElementById("services");
+
+    // Load saved services on page load
+    window.addEventListener("load", () => {
+        const saved = localStorage.getItem("servicesText");
+        if(saved) {
+            services.innerText = saved;
+        }
+    });
+
+    // Make services editable on click
+    services.addEventListener("click", () => {
+        let newServices = prompt("Edit your services:", services.innerText);
+        if(newServices !== null && newServices.trim() !== "") {
+            services.innerText = newServices;
+            localStorage.setItem("servicesText", newServices); // Save changes
+        }
+    });
+</script>
+
+</body>
+</html>
